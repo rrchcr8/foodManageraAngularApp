@@ -1,4 +1,57 @@
-<div *ngFor="let food of foods">
+<!-- <div *ngFor="let food of foods">
   <div> {{food.name}} </div>
   
-  </div>
+  </div> -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="color:white;">Delicious Food</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+       <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+             <!-- <a class="nav-link" (click)="onOpenModal(null, 'add')">Add Employee <span class="sr-only">(curre5555nt)</span></a> -->
+          </li>
+       </ul>
+       <form class="form-inline my-2 my-lg-0">
+          <!-- <input type="search" (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel
+           name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search employees..." required> -->
+       </form>
+    </div>
+  </nav>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.9.95/css/materialdesignicons.css" rel="stylesheet">
+
+<div class="container">
+    <div class="row clearfix">
+        <div *ngFor="let food of foods" class="col-lg-3 col-md-4 col-sm-12">
+            <div class="card product_item">
+                <div class="body">
+                    <div class="cp_img">
+                        <img src="{{food?.imageUrl}}" alt="Product" class="img-fluid">
+                        <div class="hover">
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-star-circle"></i></a>
+                        </div>
+                    </div>
+                    <div class="product_details">
+                        <h5><a href="ec-product-detail.html">{{food?.name}}</a></h5>
+                        <ul class="employers-icons list-inline mb-1">
+                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
+                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
+                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
+                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
+                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star-outline f-19"></i></a></li>
+                      </ul>
+                      <span class="badge badge-warning text-white">4.0</span>
+                        <ul class="product_price list-unstyled">
+                            <li class="old_price">$16.00</li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
