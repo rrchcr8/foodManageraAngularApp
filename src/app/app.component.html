@@ -14,15 +14,16 @@
           </li>
        </ul>
        <form class="form-inline my-2 my-lg-0">
-          <!-- <input type="search" (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel
-           name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search employees..." required> -->
+          <input type="search" (ngModelChange)="searchFood(key2.value)" #key2="ngModel" ngModel
+           name="key2" id="searchName" class="form-control mr-sm-2" placeholder="Search..." required>
        </form>
     </div>
   </nav>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.9.95/css/materialdesignicons.css" rel="stylesheet">
 
-<div class="container">
+<div class="container" id="main-container">
     <div class="row clearfix">
         <div *ngFor="let food of foods" class="col-lg-3 col-md-4 col-sm-12">
             <div class="card product_item">
@@ -30,10 +31,10 @@
                     <div class="cp_img">
                         <img src="{{food?.imageUrl}}" alt="Product" class="img-fluid">
                         <div class="hover">
-                            <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                            <a (click)="onOpenModal(food,'add')" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
                             <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-star-circle"></i></a>
                         </div>
-                    </div>
+                      </div>
                     <div class="product_details">
                         <h5><a href="ec-product-detail.html">{{food?.name}}</a></h5>
                         <ul class="employers-icons list-inline mb-1">
@@ -43,9 +44,9 @@
                           <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
                           <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star-outline f-19"></i></a></li>
                       </ul>
-                      <span class="badge badge-warning text-white">4.0</span>
+                      <span class="badge badge-warning text-white">{{food?.rating}}</span>
                         <ul class="product_price list-unstyled">
-                            <li class="old_price">$16.00</li>
+                            <li class="old_price">${{food?.price}}</li>
                             
                         </ul>
                     </div>
@@ -55,3 +56,69 @@
         
     </div>
 </div>
+
+<!-- Add to cart Modal -->
+
+<div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCartModal5" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="addToCartModalLabel">Add item {{addToCartFood?.name}}</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <!-- <form #addToCartForm="ngForm" (ngSubmit)="onAddToCart(addToCartForm)"> -->
+            <form #addToCartForm="ngForm">
+              <div class="form-group">
+                 <label for="name">Name</label>
+                 <div class="description"> {{addToCartFood?.name}}</div>
+              </div>
+              <div class="cp_img">
+                <img src="{{addToCartFood?.imageUrl}}" alt="Product" class="img-fluid">
+                
+              </div> 
+              
+              <input type="hidden" ngModel="{{addToCartFood?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+              
+              <div class="form-group">
+                <label for="description">Description</label>
+                <div class="description"> {{addToCartFood?.description}}</div>
+               </div>
+              
+               <div class="form-group">
+                <label for="type">Tipe</label>
+                <div class="description"> {{addToCartFood?.foodType.name}}</div>
+               </div>  
+
+               <div class="form-group">
+                <label for="price">Price</label>
+                <div class="description"> $ {{addToCartFood?.price}}</div>
+               </div>
+
+
+    
+              <div class="form-group">
+                 <label for="Quantity">Quantity</label>
+                 <input type="text" ngModel="{{quantity}}" (ngModelChange)="calculatePartialAmount(key.value, addToCartFood?.price)" #key="ngModel" ngModel name="quantity" class="form-control" id="quantity" placeholder="Quantity" value="8">
+              </div>
+              <div class="form-group">
+                 <label for="phone">Partial Amount</label>
+                 <input type="text"  name="pAmount" class="form-control" id="pAmount"  placeholder="{{partialAmount}}">
+              </div>
+              
+              <!-- <div class="form-group">
+                 <label for="phone">Image URL</label>
+                 <input type="text" ngModel="{{editEmployee?.imageUrl}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
+              </div> -->
+              <div class="modal-footer">
+                 <button type="button" id="perreito" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                 <button (click)="onAddToCart(addToCartForm.value)" data-dismiss="modal" class="btn btn-primary" >Add to Cart</button>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+</div> 
+

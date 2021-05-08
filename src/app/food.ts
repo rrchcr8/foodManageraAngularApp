@@ -7,5 +7,6 @@ export interface Food {
     foodType:FoodType
     description: string;
     imageUrl: string;
+    price:number;
        
 }
