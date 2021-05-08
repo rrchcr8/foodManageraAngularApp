@@ -1,10 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Food } from './food';
 import { FoodService } from './food.service';
 import { Item } from './item';
+import { Ratings } from './ratings';
 
 @Component({
   selector: 'app-root',
@@ -13,14 +15,16 @@ import { Item } from './item';
 })
 export class AppComponent implements OnInit {
   public foods: Food[];
+  public editFood: Food;
   public addToCartFood: Food;
   public partialAmount:number;
   public quantity:number;
   public item:Item;
   public cart = new Map();
+  public ratingInterface: Ratings;
   title = "star-angular";
   stars = [1, 2, 3, 4, 5];
-  rating = 0;
+  public rating = 2;
   hoverState = 0;
 
   
@@ -45,9 +49,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getAllFoods();
-   
-    
-
   }
 
   public getAllFoods(): void {
@@ -55,6 +56,9 @@ export class AppComponent implements OnInit {
       (response: Food[]) => {
         this.foods = response;
         console.log(this.foods);
+        console.log(this.foods[1]);
+        this.editFood = this.foods[1]
+      
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -91,26 +95,21 @@ export class AppComponent implements OnInit {
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'add') {
       this.addToCartFood = food;
+      this.rating=food.rating;
        if (this.cart.has(food.id)){
          this.quantity = this.cart.get(food.id);
        }
        else{
        this.quantity = 0;
        }
-      
-     
-      //  if (this.cart.has(food.id)){
-      //   this.partialAmount=this.cart.get(food.id)*food.price;
-      //  }
-      //  else
        this.partialAmount=0;
-       
       button.setAttribute('data-target', '#addToCartModal');
     }
-    // if (mode === 'rank') {
-    //   this.editEmployee = employee;
-    //   button.setAttribute('data-target', '#updateEmployeeModal');
-    // }
+    if (mode === 'addRatio') {
+      this.addToCartFood = food;
+      this.rating=food.rating;
+      button.setAttribute('data-target', '#addRatingModal');
+    }
 
     container.appendChild(button);
     button.click();
@@ -125,12 +124,35 @@ export class AppComponent implements OnInit {
 
   
   public onAddToCart(item: Item): void{  
-    console.log(item);
+    console.log("ITEM   "+ item);
+    
     this.cart.set(item.id, item.quantity);
     
 
     console.log(this.cart);
     
+   
+  }
+
+  public onAddRating(foodId: number): void{  
+    console.log(foodId);
+    console.log("rating is: " + this.rating);
+    console.log("FOOD ADD  "+ this.addToCartFood.id);
+    //console.log("rating  ''''"+this.ratingInterface);
+    this.ratingInterface= {food: this.addToCartFood,
+      rating: this.rating,
+    id:null}
+    this.foodService.addRating(this.ratingInterface).subscribe(
+       (response: Ratings) => {
+         console.log("rating added:  "+ response);
+         this.getAllFoods();
+       },
+       (error: HttpErrorResponse) => {
+         alert(error.message);
+       }
+     );
+
+   
    
   }
 

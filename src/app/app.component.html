@@ -32,7 +32,7 @@
                         <img src="{{food?.imageUrl}}" alt="Product" class="img-fluid">
                         <div class="hover">
                             <a (click)="onOpenModal(food,'add')" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-star-circle"></i></a>
+                            <a (click)="onOpenModal(food,'addRatio')" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-star-circle"></i></a>
                             
                         </div>
                       </div>
@@ -130,3 +130,70 @@
   </div>
 </div> 
 
+
+<!-- Add RATING Modal -->
+
+<div class="modal fade" id="addRatingModal" tabindex="-1" role="dialog" aria-labelledby="addToCartModal5" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addToCartModalLabel">Add RATING {{addToCartFood?.name}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <!-- <form #addToCartForm="ngForm" (ngSubmit)="onAddToCart(addToCartForm)"> -->
+             <form #addRatingForm="ngForm">
+               <div class="form-group">
+                  <label for="name">Name</label>
+                  <div class="description"> {{addToCartFood?.name}}</div>
+               </div>
+               <div class="cp_img">
+                 <img src="{{addToCartFood?.imageUrl}}" alt="Product" class="img-fluid">
+                 
+               </div> 
+               
+               <input type="hidden" ngModel="{{addToCartFood?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+              
+               <div class="flex-container"> 
+              <ng-container *ngFor="let star of stars">
+                <app-star [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
+                  (bigClick)="updateRating(star)">
+                </app-star>
+              </ng-container>
+             </div>  
+              
+             
+             <div class="form-group">
+                 <label for="description">Description</label>
+                 <div class="description"> {{addToCartFood?.description}}</div>
+                </div>
+               
+                <div class="form-group">
+                 <label for="type">Tipe</label>
+                 <div class="description"> {{addToCartFood?.foodType.name}}</div>
+                </div>  
+ 
+                <div class="form-group">
+                 <label for="price">Price</label>
+                 <div class="description"> $ {{addToCartFood?.price}}</div>
+                
+                </div>
+ 
+      
+               <!-- <div class="form-group">
+                  <label for="phone">Image URL</label>
+                  <input type="text" ngModel="{{editEmployee?.imageUrl}}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL">
+               </div> -->
+               <div class="modal-footer">
+                  <button type="button"  data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onAddRating(addRatingForm.value)" data-dismiss="modal" class="btn btn-primary" >Add CALIFICATION</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+ </div> 
+ 
+ 
