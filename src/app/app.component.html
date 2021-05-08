@@ -33,20 +33,18 @@
                         <div class="hover">
                             <a (click)="onOpenModal(food,'add')" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
                             <a href="javascript:void(0);" class="btn btn-primary btn-sm waves-effect"><i class="zmdi zmdi-star-circle"></i></a>
+                            
                         </div>
                       </div>
+                     
                     <div class="product_details">
                         <h5><a href="ec-product-detail.html">{{food?.name}}</a></h5>
-                        <ul class="employers-icons list-inline mb-1">
-                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
-                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
-                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
-                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star f-19"></i></a></li>
-                          <li class="list-inline-item"><a href="#" class="text-warning"><i class="mdi mdi-star-outline f-19"></i></a></li>
-                      </ul>
-                      <span class="badge badge-warning text-white">{{food?.rating}}</span>
-                        <ul class="product_price list-unstyled">
+                        
+                        
+                        
+                         <ul class="product_price list-unstyled">
                             <li class="old_price">${{food?.price}}</li>
+                            
                             
                         </ul>
                     </div>
@@ -81,8 +79,17 @@
               </div> 
               
               <input type="hidden" ngModel="{{addToCartFood?.id}}" name="id" class="form-control" id="id" placeholder="Email">
-              
-              <div class="form-group">
+             
+              <div class="flex-container"> 
+             <ng-container *ngFor="let star of stars">
+               <app-star [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
+                 (bigClick)="updateRating(star)">
+               </app-star>
+             </ng-container>
+            </div>  
+             
+            
+            <div class="form-group">
                 <label for="description">Description</label>
                 <div class="description"> {{addToCartFood?.description}}</div>
                </div>
@@ -95,6 +102,7 @@
                <div class="form-group">
                 <label for="price">Price</label>
                 <div class="description"> $ {{addToCartFood?.price}}</div>
+               
                </div>
 
 
